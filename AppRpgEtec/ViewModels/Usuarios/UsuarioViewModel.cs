@@ -27,7 +27,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
         {
             RegistrarCommand = new Command(async () => await RegistrarUsuario());
             AutenticarCommand = new Command(async () => await AutenticarUsuario());
-           DirecionarCadastroCommand = new Command(async () => await DirecionarParaCadastro());
+            DirecionarCadastroCommand = new Command(async () => await DirecionarParaCadastro());
         }
 
         #region AtributosPropriedades
@@ -83,7 +83,27 @@ namespace AppRpgEtec.ViewModels.Usuarios
             }
         }
 
-        public async Task AutenticarUsuario()//Método para autenticar um usuário     
+        public async Task DirecionarParaCadastro()//Método para exibição da view de Cadastro      
+        {
+            try
+            {
+                await Application.Current.MainPage.
+                    Navigation.PushAsync(new Views.Usuarios.CadastroView());
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage
+                    .DisplayAlert("Informação", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
+            }
+        }
+
+
+
+        #endregion
+        private CancellationTokenSource _cancelTokenSource;
+        private bool _isCheckingLocation;
+
+        public async Task AutenticarUsuario()
         {
             try
             {
@@ -103,6 +123,22 @@ namespace AppRpgEtec.ViewModels.Usuarios
                     Preferences.Set("UsuarioPerfil", uAutenticado.Perfil);
                     Preferences.Set("UsuarioToken", uAutenticado.Token);
 
+                    _isCheckingLocation = true;
+                    _cancelTokenSource = new CancellationTokenSource();
+                    GeolocationRequest request =
+                        new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+
+                    Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+
+                    Usuario uLoc = new Usuario();
+                    uLoc.Id = uAutenticado.Id;
+                    uLoc.Latitude = location.Latitude;
+                    uLoc.Longitude = location.Longitude;
+
+                    UsuarioService uServiceLoc = new UsuarioService(uAutenticado.Token);
+                    await uServiceLoc.PutAtualizarLocalizacaoAsync(uLoc);
+                    //Fim
+
                     await Application.Current.MainPage
                             .DisplayAlert("Informação", mensagem, "Ok");
 
@@ -120,24 +156,5 @@ namespace AppRpgEtec.ViewModels.Usuarios
                     .DisplayAlert("Informação", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
-
-        public async Task DirecionarParaCadastro()//Método para exibição da view de Cadastro      
-        {
-            try
-            {
-                await Application.Current.MainPage.
-                    Navigation.PushAsync(new Views.Usuarios.CadastroView());
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage
-                    .DisplayAlert("Informação", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
-            }
-        }
-
-
-
-        #endregion
-
     }
 }

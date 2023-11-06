@@ -62,7 +62,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.96" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.86" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 

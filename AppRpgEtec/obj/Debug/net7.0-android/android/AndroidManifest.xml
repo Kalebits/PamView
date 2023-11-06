@@ -9,9 +9,9 @@
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACESS_MOCK_LOCATION" />
-  <uses-permission android:name="android.permission.ACESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-feature android:glEsVersion="0x00020000" android:required="true" />
   <queries>
     <!-- Needs to be explicitly declared on Android R+ -->
@@ -20,7 +20,7 @@
   <permission android:name="com.companyname.apprpgetec.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.companyname.apprpgetec.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
   <application android:name="crc648cace2d65dd9830e.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="AppRpgEtec" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:usesCleartextTraffic="true">
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyACbRR1zOgnO8Uh7TB7j1r_Xwm5ieipUAw" />
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAKCf0qTeWEofh8N-Ej2fFEUbq9--JwwcQ" />
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:name="crc648cace2d65dd9830e.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:theme="@style/Maui.SplashTheme">
       <intent-filter>

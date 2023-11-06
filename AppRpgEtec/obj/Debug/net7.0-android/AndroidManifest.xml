@@ -9,11 +9,11 @@
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACESS_MOCK_LOCATION" />
-  <uses-permission android:name="android.permission.ACESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:name="crc648cace2d65dd9830e.MainApplication" android:usesCleartextTraffic="true" android:label="AppRpgEtec" android:debuggable="true" android:extractNativeLibs="true">
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyACbRR1zOgnO8Uh7TB7j1r_Xwm5ieipUAw"></meta-data>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAKCf0qTeWEofh8N-Ej2fFEUbq9--JwwcQ"></meta-data>
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:theme="@style/Maui.SplashTheme" android:name="crc648cace2d65dd9830e.MainActivity" android:exported="true">
       <intent-filter>

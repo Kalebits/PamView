@@ -1,53 +1,93 @@
+﻿using AppRpgEtec.Models;
+using AppRpgEtec.Services.Usuarios;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using System.Net.NetworkInformation;
+using System.Collections.ObjectModel;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
-namespace AppRpgEtec.ViewModels.Usuarios;
-
-public class LocalizacaoViewModel : ContentView
+namespace AppRpgEtec.ViewModels.Usuarios
 {
-    public LocalizacaoViewModel()
+    public class LocalizacaoViewModel : BaseViewModel
     {
+        private UsuarioService uService;
         
-    }
-    private Map meuMapa;
-
-    public Map MeuMapa
-    {
-        get => meuMapa;
-        set
+        public LocalizacaoViewModel()
         {
-            if (value != null)
+            string token = Preferences.Get("UsuarioToken", string.Empty);
+            uService = new UsuarioService(token);
+        }
+
+        private Map meuMapa;
+
+        public Map MeuMapa
+        {
+            get => meuMapa;
+            set
             {
-                meuMapa = value;
-                OnPropertyChanged();
+                if (value != null)
+                {
+                    meuMapa = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public async void InicializarMapa()
+        {
+            try
+            {
+                Location location = new Location(-23.5200241d, -46.596498d);
+                Pin pinEtec = new Pin()
+                {
+                    Type = PinType.Place,
+                    Label = "Etec Horacio",
+                    Address = "Rua alcântara, 113, Vila Guilherme",
+                    Location = location
+                };
+
+                Map map = new Map();
+                MapSpan mapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(5));
+                map.Pins.Add(pinEtec);
+                map.MoveToRegion(mapSpan);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", ex.Message, "Ok");
+            }
+        }
+
+        public async void ExibirUsuariosNoMapa()
+        {
+            try
+            {
+                ObservableCollection<Usuario> ocUsuarios = await uService.GetUsuariosAsync();
+                List<Usuario> listaUsuarios = new List<Usuario>(ocUsuarios);
+                Map map = new Map();
+
+                foreach(Usuario u in listaUsuarios)
+                {
+                    if(u.Latitude != null &&  u.Longitude != null)
+                    {
+                        double latitude = (double)u.Latitude;
+                        double longitude = (double)u.Longitude;
+                        Location location = new Location(latitude, longitude);
+
+                        Pin pinAtual = new Pin()
+                        {
+                            Type = PinType.Place,
+                            Label = u.Username,
+                            Address = $"E-mail: {u.Email}",
+                            Location = location
+                        };
+                        map.Pins.Add(pinAtual);
+                    }
+                }
+                MeuMapa = map;
+            }
+            catch(Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", ex.Message, "Ok");
             }
         }
     }
-
-    public async void InicializarMapa()
-    {
-        try
-        {
-            Location location = new Location(-23.5200241d, -46.596498d);
-            Pin pinEtec = new Pin()
-            {
-                Type = PinType.Place,
-                Label = "Etec Horacio",
-                Address = "Rua alc�ntara, 113, Vila Guilherme",
-                Location = location
-            };
-
-            Map map = new Map();
-            MapSpan mapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(5));
-            map.Pins.Add(pinEtec);
-            map.MoveToRegion(mapSpan);
-        }
-        catch(Exception ex)
-        {
-            await Application.Current.MainPage.DisplayAlert("Erro", ex.Message, "Ok");
-        }
-    }
 }
-
